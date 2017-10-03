@@ -8,15 +8,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
-// sio metodai bus pasiimti is SpringSecurity
+// sio metodai bus pasiimti is SpringSecurity, reikia servisu klasese @Service anotacijos
 @Service
 public class SecurityServiceImpl implements SecurityService {
 
     @Autowired
-    UserDetailsService userDetailsService;
+    private UserDetailsService userDetailsService;
 
     @Autowired
-    AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
     @Override
     public String findLogginUsername() {
