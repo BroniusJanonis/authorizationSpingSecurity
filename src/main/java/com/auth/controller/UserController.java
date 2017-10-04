@@ -47,19 +47,18 @@ public class UserController {
         return "redirect:/welcomemainpage";
     }
 
+    // ir /welcomemainpage ir / (tuscias) numeta i welcompage
     @RequestMapping(value = "/welcomemainpage", method = RequestMethod.GET)
     public String welcome(Model model){
         return "welcommainpage";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(value = {"/login", "/"}, method = RequestMethod.GET)
     public String login(Model model, String error){
-        return "login";
-    }
-
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(Model model){
-        return "redirect:/welcomemainpage";
+        if(error!=null){
+            model.addAttribute("error", "wrong username arba password");
+        }
+        return "loginMain";
     }
 
 }

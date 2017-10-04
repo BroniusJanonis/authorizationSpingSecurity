@@ -21,7 +21,7 @@
                 <%--/login dave sping'as kaip veina is pasirinkimu--%>
                 <%--${error!=null ? ''} reiskia, kad jei error nelygu nuliui (jeigu jis yra), tai pakeiciam spalva, show-error klase, kitu atveju nieko nedarom--%>
                 <%--error mes dar paduosime is controlerio--%>
-
+                <%--cia yra spring'o login'as (spring security metodas)--%>
                 <form method="post" action="${path}/login" class="form-control ${error!=null ? 'show-error': ''}">
                     <input type="text" name="username" placeholder="Username" autofocus="true"/>
                     <input type="password" name="password" placeholder="Password"/>

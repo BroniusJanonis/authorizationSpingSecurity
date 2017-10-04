@@ -14,6 +14,17 @@
 <body>
 
 Veikia
+<c:if test="${pageContext.request.userPrincipal.name!=null}">
+    <form id="logoutForm" method="post" action="${path}/logout">
+        <%--perduodam tokenus--%>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+    </form>
+    <%--cia pateikiam vartotoja ir onclick padarom, jog atjungtumem vartotoja--%>
+    <h2>Labas vartotojau vardu: ${pageContext.request.userPrincipal.name} |->
+        <a onclick="document.forms['logoutForm'].submit()">Logout</a>
+    </h2>
+</c:if>
 
 <script type="text/javascript" src="${path}/resources/js/bootstrap.js"/>
 <script type="text/javascript" src="${path}/resources/js/jquery-3.2.1.js"/>

@@ -30,11 +30,17 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 // jei dar turim papildomu salygu, tai su and() pridedame
                 .and()
-                // login page
+                // login page, cia spring security
                 .formLogin().loginPage("/login").permitAll()
-                // .successForwardUrl("/welcommainpage")  < testuojam
+                // cia nukreipiam, kai success
+                .defaultSuccessUrl("/welcomemainpage")  //< testuojam
+//                // jei neveikia
+//                .failureUrl("/welcome2")
                 // ir tada issijungiam (?)
-                .and().logout().permitAll();
+                // logout() pagrazina i login langa arba gal galim apsirasyti savo logout langa?
+                .and().logout().permitAll()
+                // login ir logout yra spring main metodai, jei atsijungi su logout, tai pagrazina i login > kas yra mano loginMain.jsp
+                .logoutSuccessUrl("/");
         // praleidziame resourses visus, tada register langa, tada login ir tada nutraukiam viska
     }
 
