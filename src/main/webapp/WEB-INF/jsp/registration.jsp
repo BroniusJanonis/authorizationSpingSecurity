@@ -16,38 +16,20 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 align-content-lg-center">
+                <%--kadangi form:form tipe nurodom modelAttribute="userForm", tai ir kontroleryje reikia nusirodyt @ModelAttribute("userForm") --%>
                 <form:form method="post" modelAttribute="userForm" cssClass="formdesign">
-
                         <form:input type="text" path="username" placeholder="Username" autofocus="true"/>
-
+                        <form:errors path="username"></form:errors>
                         <form:input type="password" path="password" placeholder="Password"/>
-
+                        <form:errors path="password"></form:errors>
                         <form:input type="password" path="passwordconfirm" placeholder="Confirm Password"/>
-
+                        <form:errors path="passwordconfirm"></form:errors>
                         <form:button type="submit" class="btn" value="save"/>
 
                 </form:form>
             </div>
         </div>
     </div>
-
-    <div class="container">
-        <div class="row">
-
-            <div class="col-md-8 align-content-lg-center">
-                <div>
-                    <input type="text" placeholder="Username"/>
-                </div>
-                <div>
-                    <input type="password" placeholder="Password"/>
-                </div>
-                <div>
-                    <input type="password" placeholder="Confirm Password">
-                </div>
-            </div>
-        </div>
-    </div>
-
 
 </div>
 

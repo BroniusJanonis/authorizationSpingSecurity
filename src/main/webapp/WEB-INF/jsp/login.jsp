@@ -19,9 +19,14 @@
 
             <div class="col-md-8 align-content-lg-center">
                 <%--/login dave sping'as kaip veina is pasirinkimu--%>
-                <form method="post" action="${path}/login" class="form-control">
+                <%--${error!=null ? ''} reiskia, kad jei error nelygu nuliui (jeigu jis yra), tai pakeiciam spalva, show-error klase, kitu atveju nieko nedarom--%>
+                <%--error mes dar paduosime is controlerio--%>
+
+                <form method="post" action="${path}/login" class="form-control ${error!=null ? 'show-error': ''}">
                     <input type="text" name="username" placeholder="Username" autofocus="true"/>
                     <input type="password" name="password" placeholder="Password"/>
+                    <%--cia apacioj dar atvaizduojam error, jei is kontrolerio validacijos ateina netinkamas atsakymas--%>
+                    <span>${error}</span>
                     <%--kadangi kalbejom, jog paduosim token, tai springe naudojamas "_csrf"  < cia yra panasus kaip sesijos kodas, nes eisim per puslapi
                     , ji issikviesim kiekveinam puslapy, jis bus headeriuose ir taip autintifikuosimes. Jis alia yra saugesnis nei sesija--%>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

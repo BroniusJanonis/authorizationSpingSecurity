@@ -32,6 +32,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 // login page
                 .formLogin().loginPage("/login").permitAll()
+                // .successForwardUrl("/welcommainpage")  < testuojam
                 // ir tada issijungiam (?)
                 .and().logout().permitAll();
         // praleidziame resourses visus, tada register langa, tada login ir tada nutraukiam viska
