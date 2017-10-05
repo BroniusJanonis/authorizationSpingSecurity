@@ -5,12 +5,16 @@ import com.auth.service.SecurityService;
 import com.auth.service.UserRoleService;
 import com.auth.util.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class UserController {
@@ -53,12 +57,38 @@ public class UserController {
         return "welcommainpage";
     }
 
+    // cia pirma jungiasi per webSecurityConfigurator login > .formLogin().loginPage("/login")
+    // kadangi nesi prisijunges, tai nera klaidos, todel permeta i loginMain.jsp
+    // jei ivedant username ir password (apsirase loginMain.jsp), jie atitinka musus spring security, tai webSecurityConfigurator > .defaultSuccessUrl("/welcomemainpage")
+    // kitu atveju, gavus ir spring security klaida, mums pagrazina error, kadangi tai nera lygu null, tai pagrazina i loginMain ir ismeta klaida, kuria atvaziduojam jau apsirasytam .jsp
     @RequestMapping(value = {"/login", "/"}, method = RequestMethod.GET)
     public String login(Model model, String error){
         if(error!=null){
             model.addAttribute("error", "wrong username arba password");
         }
         return "loginMain";
+    }
+
+    @RequestMapping(value= "/logout", method = RequestMethod.GET)
+    public String logout(HttpServletRequest request, HttpServletResponse response){
+        // isgausim is konteksto security authentication
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // jei authentication yra nelygus nuliui, tai padarom atjungima ir siunciame i logouta
+        if(authentication != null) {
+            // pasikuriame objekta, kuris handlina logouta ir logout() metode paduodame sesijos duomenis (jame turime paduoti requesta, response ir authentication < visu esamu sesiju)
+            new SecurityContextLogoutHandler().logout(request, response, authentication);
+        }
+        // redirectins i login, jei suveiks logout (Spring'o logout)
+        return "redirect:/login?logout";
+    }
+
+    // skirtas metodas, jog atvaizduotumem kontroleryje sesijos name
+    @RequestMapping(value = "/authentication", method = RequestMethod.GET)
+    public String username(Model model){
+        // keisti galime vietoj .getName() > .getCredentials(), .getPrincipal(), .getDetails()
+        Object name = SecurityContextHolder.getContext().getAuthentication().getName();
+        model.addAttribute("authentication", name);
+        return "welcome2";
     }
 
 }

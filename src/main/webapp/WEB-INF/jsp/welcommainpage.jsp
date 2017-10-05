@@ -15,6 +15,7 @@
 
 Veikia
 <c:if test="${pageContext.request.userPrincipal.name!=null}">
+    <%--/logout cia yra Spring'o logout metodas, kuris atsakingas uz token sesijos atsijungima--%>
     <form id="logoutForm" method="post" action="${path}/logout">
         <%--perduodam tokenus--%>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
