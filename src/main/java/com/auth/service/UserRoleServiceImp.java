@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 
+// cia apsirase mes patys pagal UserRoleService
 @Service
 public class UserRoleServiceImp implements UserRoleService {
 
@@ -25,9 +26,11 @@ public class UserRoleServiceImp implements UserRoleService {
         // kadangi esam bCryptPasswordEncoder apsirase WebSecyruttConfiguration klaseje, kuris priima user, tai uzkoduojame
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setRoles(new HashSet<>(roleRep.findAll()));  // duok visus ir prisiskiriam i HashSet
+        // kadangi jau @autowirine esamt UserRep, tai ten yra spring JPA implementuoti, kuris duosa savo metoda save()
         userRep.save(user);
     }
 
+    // sio metodo reikia, kad gautumem user pagal jo varda, naudojama UserValidator klaseje
     @Override
     public User findByUsername(String username) {
         return userRep.findByUsername(username);

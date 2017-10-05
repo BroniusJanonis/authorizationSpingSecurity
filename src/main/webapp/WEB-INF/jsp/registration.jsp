@@ -17,6 +17,7 @@
         <div class="row">
             <div class="col-md-8 align-content-lg-center">
                 <%--kadangi form:form tipe nurodom modelAttribute="userForm", tai ir kontroleryje reikia nusirodyt @ModelAttribute("userForm") --%>
+                uztenka ir post (nereikia action, kad pagrazintu i "/register"), nes mes per register "get" cia pasikreipiam, o submitine mus grazina i ta pati "/register", bet post
                 <form:form method="post" modelAttribute="userForm" cssClass="formdesign">
                         <form:input type="text" path="username" placeholder="Username" autofocus="true"/>
                         <form:errors path="username"></form:errors>
@@ -25,7 +26,6 @@
                         <form:input type="password" path="passwordconfirm" placeholder="Confirm Password"/>
                         <form:errors path="passwordconfirm"></form:errors>
                         <form:button type="submit" class="btn" value="save"/>
-
                 </form:form>
             </div>
         </div>

@@ -6,6 +6,7 @@ import com.auth.service.UserRoleService;
 import com.auth.util.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Collection;
+import java.util.Iterator;
 
 @Controller
 public class UserController {
@@ -57,10 +60,12 @@ public class UserController {
         return "welcommainpage";
     }
 
-    // cia pirma jungiasi per webSecurityConfigurator login > .formLogin().loginPage("/login")
+    // cia pirma jungiasi per controleri "login". get'a
     // kadangi nesi prisijunges, tai nera klaidos, todel permeta i loginMain.jsp
-    // jei ivedant username ir password (apsirase loginMain.jsp), jie atitinka musus spring security, tai webSecurityConfigurator > .defaultSuccessUrl("/welcomemainpage")
-    // kitu atveju, gavus ir spring security klaida, mums pagrazina error, kadangi tai nera lygu null, tai pagrazina i loginMain ir ismeta klaida, kuria atvaziduojam jau apsirasytam .jsp
+    //    jei ivedant username ir password (apsirase loginMain.jsp), jie atitinka musus spring security
+    //    , tai webSecurityConfigurator > .formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/welcomemainpage")
+    //        kitu atveju, gavus ir spring security klaida (nes login spring suceess_, mums pagrazina error, kadangi tai nera lygu null, tai pagrazina i loginMain ir ismeta klaida
+    //        , kuria atvaziduojam jau apsirasytam .jsp  (pirmu atveju tik pasijungus nemes klaidos, nes pirma karta uzkrauna puslapi per controleri, o jau jungiantis krauna "/login" per security pirma)
     @RequestMapping(value = {"/login", "/"}, method = RequestMethod.GET)
     public String login(Model model, String error){
         if(error!=null){
@@ -89,6 +94,31 @@ public class UserController {
         Object name = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("authentication", name);
         return "welcome2";
+    }
+
+
+    // REIKIA PABAIGTI!!!!!!!!!!!!
+    // gauname role ir pagal ja persiunciame ten, kur norime, prie kokio lango jungtis
+    @RequestMapping(value = "/getrole", method = RequestMethod.GET)
+    public String getrole(Model model, Authentication authentication){
+        // gaunam autentifikacija
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        // per iteratoriu parsinam
+        Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
+        // kol iteratorius nera tuscias (saugumo sumetimais ir geroji praktika)
+        while(iterator.hasNext()){
+            GrantedAuthority next = iterator.next();
+            String role = next.getAuthority();
+            if(role.equals("admin")){
+                return "adminjsplangas";
+            } else if(role.equals("teacher")){
+                return "teacherlangas";
+            }else if (role.equals("schoolchild")){
+                return "schoolchildlangas";
+            }
+        }
+        // jei neatitinka nei vienas, tai i logino langa pagrazina
+        return "login";
     }
 
 }

@@ -34,6 +34,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .formLogin().loginPage("/login").permitAll()
                 // cia nukreipiam, kai success
                 .defaultSuccessUrl("/welcomemainpage")  //< testuojam
+                // jei ne ta adresa ivedziau
+                .failureForwardUrl("/login")
 //                // jei neveikia
 //                .failureUrl("/welcome2")
                 // ir tada issijungiam (?)
@@ -44,7 +46,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         // praleidziame resourses visus, tada register langa, tada login ir tada nutraukiam viska
     }
 
-    // uzkoduojame (?)
+    // uzkoduojame, kad globaliai sifruotu
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());

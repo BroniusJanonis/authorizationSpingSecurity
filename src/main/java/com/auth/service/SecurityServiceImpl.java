@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 // sio metodai bus pasiimti is SpringSecurity, reikia servisu klasese @Service anotacijos
 @Service
+// sita klase yra atsakinga uz kontekstine viso userio informacija, tai tokenus, passwordus, etc
 public class SecurityServiceImpl implements SecurityService {
 
     @Autowired
@@ -18,6 +19,9 @@ public class SecurityServiceImpl implements SecurityService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    // cia nenaudojame, nes controler "/authentication" metoda, jau apsirasem viename SecurityContextHolder.getContext().getAuthentication().getDetails().getName();
+    // tad sio nebereikia, taciau negalime istrinti, nes implementuojam
+    // Sie metodai yra musu aspirasyti SecurityService, kuris implementuoja SecurityService (si apsirase)
     @Override
     public String findLogginUsername() {
         // patikrinsim ar sis vartotojas yra prisijunges
@@ -30,6 +34,7 @@ public class SecurityServiceImpl implements SecurityService {
         return username;
     }
 
+    // login'ui skirta validacijai. Naudojam UserController "/register" metoda, kad patikrinam ar irasytas useris atitinka prisijungimo duomenis
     @Override
     public void login(String username, String passw) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
