@@ -6,7 +6,7 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-    <title>Registration window</title>
+    <title>Welcome window</title>
     <%--randam, kur yra registracijos langas--%>
     <link rel="stylesheet" href="${path}/resources/css/style.css">
     <link rel="stylesheet" href="${path}/resources/css/bootstrap.min.css">
@@ -15,7 +15,8 @@
 
 Veikia
 <c:if test="${pageContext.request.userPrincipal.name!=null}">
-    <%--/logout cia yra Spring'o logout metodas, kuris atsakingas uz token sesijos atsijungima--%>
+    <%--/logout cia yra Spring'o logout metodas, kuris atsakingas uz token sesijos atsijungima.
+    Pirma siunciam i WebSecurityConfiguration > "/logout" ir ten atjungiam bei on success nukreipia i mvc3 controlerio "/" langa, kuris pas mus yra irgi logino langas--%>
     <form id="logoutForm" method="post" action="${path}/logout">
         <%--perduodam tokenus--%>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
