@@ -33,7 +33,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // login page, cia spring security
                 .formLogin().loginPage("/login").permitAll()
                 // cia nukreipiam, kai success
-                .defaultSuccessUrl("/welcomemainpage")  //< testuojam
+//                .defaultSuccessUrl("/welcomemainpage")  //< testuojam
+                // arba galima taip > nukreipia successHandler i objekta, kuriame apsirase redirect'a "/welcomemainpage"
+                .successHandler(new Successhandler())
 //                // jei neveikia
 //                .failureUrl("/login")
                 // ir tada issijungiam (?)
