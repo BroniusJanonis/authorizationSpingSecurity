@@ -35,14 +35,16 @@ public class SecurityServiceImpl implements SecurityService {
     }
 
     // login'ui skirta validacijai. Naudojam UserController "/register" metoda, kad patikrinam ar irasytas useris atitinka prisijungimo duomenis
+    // Info ateina is frontendo
     @Override
     public void login(String username, String passw) {
-        // UserDetailsServiceImpl klaseje apsirasem kaip loadUserByUsername gauname pagal varda
+        // UserDetailsServiceImpl klaseje apsirasem kaip loadUserByUsername gauname pagal varda. tikrinam DB esanti objekta (atkoduota) su name, password, role
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         // headeriuose (puslapio) eina Tokenai, per kuriuos eina autorizacija (per Tokenus sifruojama informacija)
-        // pasiimam userdetail name, pasq, ir userdetails (roliu seta) ?
+        // pasiimam userdetail name, pasq, ir userdetails (roliu seta) bei pridedam dar is webo gauta passw
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, passw, userDetails.getAuthorities());
-        // autentikuojames
+        // autentikuojames. Tikrinam LoadUserByUsename( gaula per web ivesta username objekta[viduje username, password, role]) su ivestu per web passw, jei atitinka, tesiam
+        // , kitu atveju error ir WebScurityConfiguration.java permeta mus i logina langa beui UserController.java permeta zinute error
         authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         // kai autentikavomes, tai patirkinam ar vartotojas autentikuotas
         if(usernamePasswordAuthenticationToken.isAuthenticated()){
