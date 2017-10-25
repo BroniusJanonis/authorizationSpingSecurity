@@ -45,7 +45,6 @@ public class UserController {
         // bindresult tai yra, koki mes error gausime is userValidator ir koki persiusime i Jsp
         userValidator.validate(userForm, bindresult);
         if(bindresult.hasErrors()){
-//            model.addAttribute("BindingResult", bindresult);
             return "registration";
         }
         // iraso nauja useri. Apsirasem UserRoleServiceImp klaseje save su roles parinkimu (siuo atveju visas pridedam apsirase, o reiketu tik viena) ir password encoding
