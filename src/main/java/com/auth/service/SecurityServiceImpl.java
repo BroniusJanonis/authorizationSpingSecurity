@@ -37,6 +37,7 @@ public class SecurityServiceImpl implements SecurityService {
     // login'ui skirta validacijai. Naudojam UserController "/register" metoda, kad patikrinam ar irasytas useris atitinka prisijungimo duomenis
     @Override
     public void login(String username, String passw) {
+        // UserDetailsServiceImpl klaseje apsirasem kaip loadUserByUsername gauname pagal varda
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         // headeriuose (puslapio) eina Tokenai, per kuriuos eina autorizacija (per Tokenus sifruojama informacija)
         // pasiimam userdetail name, pasq, ir userdetails (roliu seta) ?

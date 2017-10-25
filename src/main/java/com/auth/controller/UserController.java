@@ -38,7 +38,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    // "userForm" reikia, nes kitaip validation nesiuncia (nesuprantu, kodel?)
+    // "userForm" reikia, nes kitaip validation nesiuncia, nes mes registration.jsp esam pasisetine > modelAttribute="userForm"
+    // BindingResult pasetins musu apsirasytu apsaugu error ir pagrazins i musu .jsp errors (errors laukeliai .jsp faile apsirasyti)
     public String register(@ModelAttribute ("userForm") User userForm, BindingResult bindresult, Model model){
         // tikrinam is gautu Jsp duomenu ar atitinka validacijas (ilgio, simboliu, etc)
         // bindresult tai yra, koki mes error gausime is userValidator ir koki persiusime i Jsp
@@ -47,7 +48,7 @@ public class UserController {
 //            model.addAttribute("BindingResult", bindresult);
             return "registration";
         }
-        // iraso nauja useri
+        // iraso nauja useri. Apsirasem UserRoleServiceImp klaseje save su roles parinkimu (siuo atveju visas pridedam apsirase, o reiketu tik viena) ir password encoding
         userRoleService.save(userForm);
         // tikrina sauguma
         securityService.login(userForm.getUsername(), userForm.getPasswordconfirm());

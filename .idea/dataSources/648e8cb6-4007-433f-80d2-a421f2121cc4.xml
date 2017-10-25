@@ -9,8 +9,8 @@
     </database>
     <schema id="3" parent="2" name="public">
       <ObjectId>2200</ObjectId>
-      <IntrospectionTimestamp>2017-10-03.08:14:37.479</IntrospectionTimestamp>
-      <IntrospectionStateNumber>4786</IntrospectionStateNumber>
+      <IntrospectionTimestamp>2017-10-06.11:25:01.876</IntrospectionTimestamp>
+      <IntrospectionStateNumber>4813</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
@@ -312,7 +312,7 @@
     </table>
     <table id="66" parent="3" name="schoolchild">
       <ObjectId>17490</ObjectId>
-      <StateNumber>4542</StateNumber>
+      <StateNumber>4799</StateNumber>
     </table>
     <table id="67" parent="3" name="schoolchild_activities">
       <ObjectId>17545</ObjectId>
@@ -336,7 +336,7 @@
     </table>
     <table id="72" parent="3" name="teacher">
       <ObjectId>17482</ObjectId>
-      <StateNumber>4405</StateNumber>
+      <StateNumber>4800</StateNumber>
     </table>
     <table id="73" parent="3" name="test5">
       <ObjectId>16719</ObjectId>
